@@ -50,7 +50,7 @@ module ApplicationHelper
       params[:document_type] = "publication_type_#{params[:publication_filter_option]}"
     end
 
-    url_for(params.slice(:organisation, :topic, :document_type).merge(controller: :email_signups, action: :show))
+    url_for(params.slice(:organisation, :topic, :document_type, :policy).merge(controller: :email_signups, action: :show))
   end
 
   def format_in_paragraphs(string)
