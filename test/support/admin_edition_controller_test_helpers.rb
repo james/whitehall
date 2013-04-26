@@ -446,6 +446,17 @@ module AdminEditionControllerTestHelpers
         assert_select ".errors", text: "Images image data file must be 960px wide and 640px tall"
       end
 
+      view_test 'attempting the creation of an edition with no image file but alt_text will not create the image' do
+        attributes = controller_attributes_for(edition_type)
+        post :create, edition: attributes.merge(
+          images_attributes: {
+            "0" => { alt_text: "text", caption: "" }
+          }
+        )
+
+        assert_select "form#edition_new"
+      end
+
       view_test 'edit displays edition image fields' do
         image = fixture_file_upload('minister-of-funk.960x640.jpg')
         edition = create(edition_type)
