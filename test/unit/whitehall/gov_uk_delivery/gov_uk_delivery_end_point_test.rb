@@ -160,6 +160,13 @@ class Whitehall::GovUkDelivery::GovUkDeliveryEndPointTest < ActiveSupport::TestC
     assert tags_for(edition).include? "#{Whitehall.public_protocol}://#{Whitehall.public_host}/government/policies.atom"
   end
 
+  test "#tags includes policy activity feeds" do
+    policy = create(:published_policy)
+    edition = create(:news_article, related_policy_ids: [policy])
+
+    assert tags_for(edition).include? "#{Whitehall.public_protocol}://#{Whitehall.public_host}/government/policies/#{policy.slug}/activity.atom"
+  end
+
   ### publications feed urls tests
 
   test '#tags for a publication returns an atom feed url for the organisation and a topic (with and without the publication_filter_option param)' do
